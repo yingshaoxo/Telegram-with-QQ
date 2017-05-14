@@ -19,9 +19,9 @@ class MySocketClient(asyncore.dispatcher):
         data = self.recv(8192)
         if data:
             try:
-                bot.send_message(CHAT_ID, data.decode('gb2312')).wait()
+                bot.send_message(CHAT_ID, data.decode('gb2312', 'ignore')).wait()
             except:
-                bot.send_message(CHAT_ID, data.decode('utf-8')).wait()
+                bot.send_message(CHAT_ID, data.decode('utf-8', 'ignore')).wait()
             else:
                 pass
             #print(data)
@@ -48,7 +48,7 @@ def handle(msg):
         try:
             real_msg = msg_format(msg.from_user.username, real_msg)
             print(real_msg)
-            real_msg = real_msg.encode('gb2312')
+            real_msg = real_msg.encode('gb2312', 'ignore')
             client.send(real_msg)
         except:
             pass
