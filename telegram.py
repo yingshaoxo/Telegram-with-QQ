@@ -39,7 +39,7 @@ def msg_format(name, text):
 @bot.message_handler(commands=['chat_id'])
 def handle(msg):
     if msg.chat.type == 'supergroup':
-        bot.reply_to(msg.chat.id, 'Chat_id of this group:\n{}'.format(str(msg.chat.id)))
+        bot.reply_to(msg.chat.id, 'Chat_id of this group:\n\n{}'.format(str(msg.chat.id)))
         
 @bot.message_handler(content_types=['text'])
 def handle(msg):
@@ -53,16 +53,7 @@ def handle(msg):
         except:
             pass
             
-#bot_thread = threading.Thread(target=bot.polling)
 socket_thread = threading.Thread(target=asyncore.loop)
-
-#bot_thread.start()
 socket_thread.start()
+
 bot.polling()
-
-
-
-
-
-
-
