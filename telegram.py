@@ -56,4 +56,5 @@ def handle(msg):
 socket_thread = threading.Thread(target=asyncore.loop)
 socket_thread.start()
 
-bot.polling()
+bot_thread = threading.Thread(target=bot.polling)
+bot_thread.start()
