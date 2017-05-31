@@ -113,7 +113,6 @@ def handle(msg):
         try:
             real_msg = msg_format(msg.from_user.username, real_msg)
             print(real_msg)
-            real_msg = real_msg.encode('utf-8', 'ignore')
             conn.send_msg(real_msg)
         except:
             pass
