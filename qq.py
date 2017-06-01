@@ -8,7 +8,7 @@ from datetime import datetime
 BotQQ = '296209157' # QQ number
 GroupID = '208408255' # Group number
 
-SERVER_ADDR = '127.0.0.1' # VPS address
+SERVER_ADDR = '45.63.90.169' # VPS address
 
 
 class ClientProtocol(asyncio.Protocol):
@@ -113,6 +113,8 @@ def onStartupComplete(bot):
 @qqbs
 def onQQMessage(bot, contact, member, content):
     if not contact.ctype == 'group': # Only receive group message
+        return
+    if member.qq == BotQQ: # Do not receive msgs from bot itself
         return
 
     if contact.name == goal_group.name:
