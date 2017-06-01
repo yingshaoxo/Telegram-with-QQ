@@ -80,6 +80,7 @@ try:
 
     while True:
         conn.send_msg(input("say something: "))
+        print('You got', threading.active_count(), 'threadings.')
 
 except KeyboardInterrupt:
     conn.is_stop = True

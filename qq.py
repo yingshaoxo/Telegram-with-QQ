@@ -21,16 +21,18 @@ class ClientProtocol(asyncio.Protocol):
 
     def data_received(self, data):
         try:
-            text = data.decode('utf-8', 'ignore')
+            nidaye = data.decode('utf-8', 'ignore')
         except:
             return
 
-        if text == '*1*':
+        if nidaye == '*1*':
             self.control.last_connection_time = datetime.now()
+            nidaye = ""
             return 
         
-        print(text)
-        mybot.SendTo(goal_group, text)
+        #print(text)
+        #print('You got', threading.active_count(), 'threadings.')
+        mybot.SendTo(goal_group, nidaye)
 
     def connection_lost(self, exc):
         print('The server closed the connection')
@@ -42,7 +44,6 @@ class ConnectionControl():
         self.loop = asyncio.get_event_loop()
         self.is_stop = False
         
-        print('connect')
         if self.reconnect():
             threading.Thread(target=self.receive_msg).start()
             threading.Thread(target=self.detect_if_offline).start()
@@ -58,7 +59,7 @@ class ConnectionControl():
             
             self.last_connection_time = datetime.now()
         except Exception as e:
-            print(e)
+            #print(e)
             print("No server available.")
             return False
 
@@ -93,19 +94,19 @@ from qqbot import QQBotSlot as qqbs, RunBot
 
 @qqbs
 def onStartupComplete(bot):
-    global groupList, buddyList, discList, goal_group
+    global groupList_, buddyList_, discList_, goal_group
     bot.Update('group')
-    groupList = bot.List('group')
+    groupList_ = bot.List('group')
     bot.Update('buddy')
-    buddyList = bot.List('buddy')
+    buddyList_ = bot.List('buddy')
     bot.Update('discuss')
-    discList = bot.List('discuss')
-    
+    discList_ = bot.List('discuss')
+
     goal_group = searchByQQ(GroupID, 'group')
     if goal_group is None:
         print("Group number error!")
         exit() 
-
+    #print('You got', threading.active_count(), 'threadings.')
     global conn, mybot
     conn = ConnectionControl()
     mybot = bot
@@ -118,6 +119,7 @@ def onQQMessage(bot, contact, member, content):
         return
 
     if contact.name == goal_group.name:
+        print('You got', threading.active_count(), 'threadings.')
         conn.send_msg(msg_format(member.name, content))
         #bot.SendTo(ct, "Check!")
     elif content == 'STOP':
@@ -126,11 +128,11 @@ def onQQMessage(bot, contact, member, content):
 
 def searchByQQ(qqID, cinfo):
     if cinfo == 'group':
-        contacts = groupList
+        contacts = groupList_
     elif cinfo == 'buddy':
-        contacts = buddyList
+        contacts = buddyList_
     elif cinfo == 'discuss':
-        contacts = discList
+        contacts = discList_
     else:
         return
     for contact in contacts:

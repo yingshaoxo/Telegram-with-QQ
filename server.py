@@ -27,7 +27,7 @@ class ServerClientProtocol(asyncio.Protocol):
 def are_you_ok():
     while True:
         for i in [i for i in connected_transport.values()]:
-            i.write(b"*1*")
+            i.write("*1*".encode('utf-8'))
         time.sleep(40)
 
 
