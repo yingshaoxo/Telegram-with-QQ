@@ -2,6 +2,7 @@ import asyncio
 import threading
 import time
 
+global connected_transport
 connected_transport = dict()
 
 class ServerClientProtocol(asyncio.Protocol):

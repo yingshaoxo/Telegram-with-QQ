@@ -9,6 +9,8 @@ TOKEN = "121899714:AAF3xShKMc52iV5yN93fiIjOH98ZXP1zcOc"#"add your telegram bot T
 bot = telebot.AsyncTeleBot(TOKEN)
 
 master_id = 131513300
+
+global share_var
 share_var = {'chat_id': -1001120909649}
 
 SERVER_ADDR = '127.0.0.1'

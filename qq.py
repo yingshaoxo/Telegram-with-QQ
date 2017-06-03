@@ -8,7 +8,7 @@ from datetime import datetime
 BotQQ = '296209157' # QQ number
 GroupID = '208408255' # Group number
 
-SERVER_ADDR = '45.63.90.169' # VPS address
+SERVER_ADDRESS = '45.63.90.169' # VPS address
 
 
 class ClientProtocol(asyncio.Protocol):
@@ -54,7 +54,7 @@ class ConnectionControl():
     def reconnect(self):
         try:
             self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop),
-                                          SERVER_ADDR, 5920)
+                                          SERVER_ADDRESS, 5920)
             self.transport, self.protocol = self.loop.run_until_complete(self.coro)
             
             self.last_connection_time = datetime.now()
