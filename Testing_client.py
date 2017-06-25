@@ -5,6 +5,8 @@ import time
 from datetime import datetime
 
 
+SERVER_ADDRESS = '45.63.90.169' # VPS address
+
 class ClientProtocol(asyncio.Protocol):
     def __init__(self, control, loop):
         self.loop = loop
@@ -16,7 +18,7 @@ class ClientProtocol(asyncio.Protocol):
     def data_received(self, data):
         text = data.decode('utf-8', 'ignore')
 
-        if text == "*1*":
+        if "*1*" in text:
             self.control.last_connection_time = datetime.now()
             return 
 
@@ -24,7 +26,7 @@ class ClientProtocol(asyncio.Protocol):
 
     def connection_lost(self, exc):
         print('The server closed the connection')
-        self.transport.close()
+        #self.transport.close()
 
 
 class ConnectionControl():
@@ -32,9 +34,8 @@ class ConnectionControl():
         self.loop = asyncio.get_event_loop()
         self.is_stop = False
 
-        self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop),'45.63.90.169', 5920)
+        self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop),SERVER_ADDRESS, 5920)
         self.last_connection_time = datetime.now()
-
         self.transport, self.protocol = self.loop.run_until_complete(self.coro)
 
         threading.Thread(target=self.receive_msg).start()

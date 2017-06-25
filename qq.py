@@ -21,21 +21,21 @@ class ClientProtocol(asyncio.Protocol):
 
     def data_received(self, data):
         try:
-            nidaye = data.decode('utf-8', 'ignore')
+            text = data.decode('utf-8', 'ignore')
         except:
             return
 
-        if '*1*' in nidaye:
+        if '*1*' in text:
             self.control.last_connection_time = datetime.now()
             return 
         
         #print(text)
         #print('You got', threading.active_count(), 'threadings.')
-        mybot.SendTo(goal_group, nidaye)
+        mybot.SendTo(goal_group, text)
 
     def connection_lost(self, exc):
         print('The server closed the connection')
-        self.transport.close()
+        #self.transport.close()
 
 
 class ConnectionControl():

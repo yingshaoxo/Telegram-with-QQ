@@ -11,7 +11,7 @@ bot = telebot.AsyncTeleBot(TOKEN)
 master_id = 131513300
 
 global share_var
-share_var = {'chat_id': -1001120909649}
+share_var = {'chat_id': -1001027434973}
 
 SERVER_ADDR = '127.0.0.1'
 
@@ -30,16 +30,16 @@ class ClientProtocol(asyncio.Protocol):
         except:
             return
 
-        if text == '*1*':
+        if '*1*' in text:
             self.control.last_connection_time = datetime.now()
             return 
         
-        print(text)
+        #print(text)
         bot.send_message(share_var['chat_id'], text).wait()
 
     def connection_lost(self, exc):
         print('The server closed the connection')
-        self.transport.close()
+        #self.transport.close()
 
 
 class ConnectionControl():
@@ -47,18 +47,17 @@ class ConnectionControl():
         self.loop = asyncio.get_event_loop()
         self.is_stop = False
 
-        if self.reconnect():
-            threading.Thread(target=self.receive_msg).start()
-            threading.Thread(target=self.detect_if_offline).start()
-        else:
-            exit()
+        self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop),SERVER_ADDRESS, 5920)
+        self.last_connection_time = datetime.now()
+        self.transport, self.protocol = self.loop.run_until_complete(self.coro)
 
+        threading.Thread(target=self.receive_msg).start()
+        threading.Thread(target=self.detect_if_offline).start()
 
     def reconnect(self):
         try:
-            self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop),
-                                          SERVER_ADDR, 5920)
-            self.transport, self.protocol = self.loop.run_until_complete(self.coro)
+            _, self.protocol = self.loop.run_until_complete(self.coro)
+            self.transport.set_protocol(self.protocol)
             
             self.last_connection_time = datetime.now()
         except Exception as e:
@@ -71,7 +70,6 @@ class ConnectionControl():
     def detect_if_offline(self): #run every 3 seconds
         while True:
             if (datetime.now() - self.last_connection_time).total_seconds() > 45:
-                self.transport.close()
                 self.reconnect()
                 print("I just reconnected the server.")
             time.sleep(3)

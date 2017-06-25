@@ -1,6 +1,5 @@
 # Telegram with QQ
 
-## How to use it
 
 ### Normal usage(vps and local):
 1. Firstly, go to your VPS, change `telegram.py` with your `bot token` and `master id`, run `do.sh`
