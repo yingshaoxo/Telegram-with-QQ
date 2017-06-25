@@ -13,7 +13,7 @@ master_id = 131513300
 global share_var
 share_var = {'chat_id': -1001027434973}
 
-SERVER_ADDR = '127.0.0.1'
+SERVER_ADDRESS = '127.0.0.1'
 
 
 class ClientProtocol(asyncio.Protocol):
@@ -52,7 +52,7 @@ class ConnectionControl():
             self.last_connection_time = datetime.now()
             self.transport, self.protocol = self.loop.run_until_complete(self.coro)
         except:
-            print("You need to make sure server is availablei.")
+            print("You need to make sure server is available.")
             exit()
 
         threading.Thread(target=self.receive_msg).start()
