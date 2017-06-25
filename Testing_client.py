@@ -34,9 +34,13 @@ class ConnectionControl():
         self.loop = asyncio.get_event_loop()
         self.is_stop = False
 
-        self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop),SERVER_ADDRESS, 5920)
-        self.last_connection_time = datetime.now()
-        self.transport, self.protocol = self.loop.run_until_complete(self.coro)
+        try:
+            self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop), SERVER_ADDRESS, 5920)
+            self.last_connection_time = datetime.now()
+            self.transport, self.protocol = self.loop.run_until_complete(self.coro)
+        except:
+            print("You need to make sure server is availablei.")
+            exit()
 
         threading.Thread(target=self.receive_msg).start()
         threading.Thread(target=self.detect_if_offline).start()
