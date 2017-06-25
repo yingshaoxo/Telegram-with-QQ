@@ -43,18 +43,18 @@ class ConnectionControl():
         self.loop = asyncio.get_event_loop()
         self.is_stop = False
         
-        self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop),'45.63.90.169', 5920)
+        self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop), SERVER_ADDRESS, 5920)
         self.last_connection_time = datetime.now()
-
         self.transport, self.protocol = self.loop.run_until_complete(self.coro)
+
         threading.Thread(target=self.receive_msg).start()
         threading.Thread(target=self.detect_if_offline).start()
 
     def reconnect(self):
         try:
-            self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop),
             _, self.protocol = self.loop.run_until_complete(self.coro)
-            
+            self.transport.set_protocol(self.protocol)
+
             self.last_connection_time = datetime.now()
         except Exception as e:
             #print(e)
