@@ -39,12 +39,15 @@ class ClientProtocol(asyncio.Protocol):
 
     def connection_lost(self, exc):
         print('The server closed the connection')
-        #self.transport.close()
+        self.transport.close()
+        self.loop.stop()
+        self.control.is_loop_stop = True
 
 
 class ConnectionControl():
     def __init__(self):
         self.loop = asyncio.get_event_loop()
+        self.is_loop_stop = False
         self.is_stop = False
 
         try:
@@ -60,16 +63,23 @@ class ConnectionControl():
 
     def reconnect(self):
         try:
+            if self.is_loop_stop:
+                self.coro = self.loop.create_connection(lambda: ClientProtocol(self, self.loop), SERVER_ADDRESS, 5920)
+                self.last_connection_time = datetime.now()
+                self.transport, self.protocol = self.loop.run_until_complete(self.coro)
+                self.is_loop_stop = False
+                return
+        except Exception as e:
+            print(e)
+            return
+        try:
             _, self.protocol = self.loop.run_until_complete(self.coro)
             self.transport.set_protocol(self.protocol)
             
             self.last_connection_time = datetime.now()
         except Exception as e:
-            #print(e)
+            print(e)
             print("No server available.")
-            return False
-
-        return True
 
     def detect_if_offline(self): #run every 3 seconds
         while True:
@@ -82,7 +92,8 @@ class ConnectionControl():
 
     def receive_msg(self):
         while True:
-            self.loop.run_until_complete(self.coro)
+            if self.is_loop_stop == False:
+                self.loop.run_until_complete(self.coro)
             time.sleep(1)
             if self.is_stop == True:
                 return
