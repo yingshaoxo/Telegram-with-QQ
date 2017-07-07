@@ -5,5 +5,5 @@ python3 server.py &
 python3 telegram.py &
 
 #nohup python3 server.py &
-#nohup python3 server.py &
+#nohup python3 telegram.py &
 #clear
