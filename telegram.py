@@ -8,12 +8,12 @@ import time
 TOKEN = "121899714:AAF3xShKMc52iV5yN93fiIjOH98ZXP1zcOc"#"add your telegram bot TOKEN"
 bot = telebot.AsyncTeleBot(TOKEN)
 
-master_id = 131513300
+master_id = 131513300 # your chat id, not nessasary here
 
 global share_var
-share_var = {'chat_id': -1001027434973}
+share_var = {'chat_id': -1001027434973} # This is the group ID, need to change
 
-SERVER_ADDRESS = '127.0.0.1'
+SERVER_ADDRESS = '127.0.0.1' # Don't change anyway
 
 
 class ClientProtocol(asyncio.Protocol):
@@ -121,8 +121,8 @@ def handle(msg):
         
 @bot.message_handler(content_types=['text'])
 def handle(msg):
-    if msg.from_user.id == master_id:
-        share_var.update({'chat_id': msg.chat.id})
+    #if msg.from_user.id == master_id:
+    #    share_var.update({'chat_id': msg.chat.id})
     if msg.chat.type == 'supergroup' and msg.chat.id == share_var['chat_id']:
         real_msg = msg.text
         try:
