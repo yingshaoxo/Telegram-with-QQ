@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 cqhttp = "*"
 python-telegram-bot = "*"
+king-chat = "*"
 
 [dev-packages]
 

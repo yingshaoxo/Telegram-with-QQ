@@ -5,6 +5,10 @@
 ```
 sudo pip3 install pipenv
 pipenv install
+
+# or with python3.6
+
+sudo pip3 install -r requirements.txt
 ```
 
 open `qq_client.py`, `telegram_client.py`, change the top variables as you need.
