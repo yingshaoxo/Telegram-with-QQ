@@ -7,7 +7,6 @@ sudo pip3 install pipenv
 pipenv install
 
 # or with python3.6
-
 sudo pip3 install -r requirements.txt
 ```
 
