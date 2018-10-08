@@ -18,7 +18,7 @@ python3 server.py &
 
 1. set up `cqhttp` in china VPS
 
-* ```
+```
 # https://cqhttp.cc/docs/4.5/#/?id=%E4%BD%BF%E7%94%A8-docker
 docker pull richardchien/cqhttp:latest
 mkdir coolq  # 用于存储酷 Q 的程序文件
