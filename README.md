@@ -2,10 +2,10 @@
 
 
 ### Requirements
-'''
+```
 sudo pip3 install pipenv
 pipenv install
-'''
+```
 
 open `qq_client.py`, `telegram_client.py`, change the top variable as you need.
 
