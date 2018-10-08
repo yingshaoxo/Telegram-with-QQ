@@ -34,7 +34,7 @@ docker run -d -ti --name cqhttp-test \
            richardchien/cqhttp:latest
 ```
 
-* go to: `http:{your_china_VPS_public_ip_adress}:9000`. (passwd is `MAX8char`) to login your robot QQ
+* go to: `http:{your_china_VPS_public_ip_adress}:9000`. (passwd is `MAX8char`) to log in your robot QQ
 
 * run qq client: `python3 qq_client.py &`
 
