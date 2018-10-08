@@ -24,6 +24,7 @@ def echo(bot, update):
     global last_user_id
     user_name = update.message.from_user.full_name
 
+    print('Your goup id: ', update.message.chat_id)
     if The_group_id_you_wanna_forward != 0:
         if update.message.chat_id == The_group_id_you_wanna_forward:
             client.send(format_msg(user_name, update.message.text))
