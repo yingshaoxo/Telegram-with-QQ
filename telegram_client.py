@@ -17,7 +17,7 @@ dispatcher = updater.dispatcher
 last_user_id = None
 
 def format_msg(user_name, text):
-    return '{user_name}: {text}'.format(user_name=user_name, text=text)
+    return '{user_name}:\n\n{text}'.format(user_name=user_name, text=text)
 
 def echo(bot, update):
     global The_group_id_you_wanna_forward
