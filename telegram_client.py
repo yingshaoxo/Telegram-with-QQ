@@ -16,16 +16,20 @@ updater = Updater(token=Token)
 dispatcher = updater.dispatcher
 last_user_id = None
 
+def format_msg(user_name, text):
+    return '{user_name}: {text}'.format(user_name=user_name, text=text)
+
 def echo(bot, update):
     global The_group_id_you_wanna_forward
     global last_user_id
+    user_name = update.message.from_user.full_name
 
     if The_group_id_you_wanna_forward != 0:
         if update.message.chat_id == The_group_id_you_wanna_forward:
-            client.send(update.message.text)
+            client.send(format_msg(user_name, update.message.text))
     else:
         last_user_id = update.message.chat_id
-        client.send(update.message.text)
+        client.send(format_msg(user_name, update.message.text))
 
 from telegram.ext import MessageHandler, Filters
 echo_handler = MessageHandler(Filters.text, echo)

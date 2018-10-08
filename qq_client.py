@@ -13,14 +13,20 @@ from cqhttp import CQHttp
 bot = CQHttp(api_root=Docker_CQhttp_address)
 last_context = None
 
+def format_msg(user_name, text):
+    return '{user_name}: {text}'.format(user_name=user_name, text=text)
+
 @bot.on_message()
 def handle_msg(context):
+    user_id = context['user_id']
+    user_info = bot.get_stranger_info(user_id=user_id)
+    user_name = user_info['nickname']
     if The_QQ_group_number_you_wanna_forward != 0:
-        client.send(context['message'])
+        client.send(format_msg(user_name, context['message']))
     else:
         global last_context
         last_context = context
-        client.send(context['message'])
+        client.send(format_msg(user_name, context['message']))
     #bot.send(context, '你好呀，下面一条是你刚刚发的：')
     #return {'reply': context['message'], 'at_sender': False}
 
