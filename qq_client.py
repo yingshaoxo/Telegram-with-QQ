@@ -118,6 +118,8 @@ def on_received(protocol, text):
         bot.send_group_msg(group_id=The_QQ_group_number_you_wanna_forward, message=text)
     elif last_context != None:
         bot.send(last_context, text)
+    else:
+        bot.send_group_msg(group_id=The_QQ_group_number_you_wanna_forward, message=text)
 
 
 
