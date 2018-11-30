@@ -2,6 +2,12 @@ Server_ip = "182.294.242.181"
 Token = '121899714:AAEXTAOSsuyFIb6Nydku3GhBM9sJtvstn8M'
 The_group_id_you_wanna_forward = 0 # change it
 
+if The_group_id_you_wanna_forward == 0:
+    print(f"""
+You have to set the The_group_id_you_wanna_forward varable to use this program.
+    """)
+    exit()
+
 
 from king_chat import Client
 
@@ -17,7 +23,8 @@ dispatcher = updater.dispatcher
 last_user_id = None
 
 def format_msg(user_name, text):
-    return '{user_name}:\n\n{text}'.format(user_name=user_name, text=text)
+    text = text.strip(' \n')
+    return '{user_name}:\n\n\n{text}'.format(user_name=user_name, text=text)
 
 def echo(bot, update):
     global The_group_id_you_wanna_forward
