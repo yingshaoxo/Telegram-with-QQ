@@ -17,10 +17,10 @@ client = Client(name="telegram", ip=Server_ip, port=5920)
 from telegram.ext import Updater
 from telegram import Bot
 
-my_bot = Bot(token=Token)
 updater = Updater(token=Token)
 dispatcher = updater.dispatcher
 last_user_id = None
+
 
 def format_msg(user_name, text):
     text = text.strip(' \n')
@@ -46,9 +46,11 @@ dispatcher.add_handler(echo_handler)
 
 @client.on_received
 def on_received(protocol, text):
+    global Token, Bot
+    my_bot = Bot(token=Token)
+
     global The_group_id_you_wanna_forward
     global last_user_id
-    global my_bot
 
     print(text)
     if The_group_id_you_wanna_forward != 0:
