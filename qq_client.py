@@ -12,7 +12,7 @@ You have to set the The_QQ_group_number_you_wanna_forward varable to use this pr
 
 from king_chat import Client
 
-client = Client(name="qq", ip=Server_ip, port=5920)
+client = Client(name="qq", ip='127.0.0.1', port=5920)
 
 
 
