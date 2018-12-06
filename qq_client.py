@@ -89,7 +89,7 @@ def handle_msg(context):
         group_id = context['group_id']
         if group_id != The_QQ_group_number_you_wanna_forward:
             new_text = filter(context['message'])
-            if new_text != "":
+            if new_text != "" and user_name != "腾讯新闻":
                 client.send(format_msg(user_name, new_text))
 
                 call_me()
