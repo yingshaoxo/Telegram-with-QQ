@@ -11,7 +11,7 @@ You have to set the The_QQ_group_number_you_wanna_forward varable to use this pr
 
 from king_chat import Client
 
-client = Client(name="qq", ip='127.0.0.1', port=5920)
+client = Client(name="qq", ip=Server_ip, port=5920)
 
 
 from cqhttp import CQHttp
@@ -86,14 +86,6 @@ def handle_msg(context):
     user_name = user_info['nickname']
     text = context['message']
 
-    """
-    if The_QQ_group_number_you_wanna_forward != 0:
-        client.send(format_msg(user_name, text))
-    else:
-        last_context = context
-        client.send(format_msg(user_name, text))
-    """
-
     if in_blacklist(user_name):
         return
 
@@ -126,7 +118,7 @@ def on_received(protocol, text):
     print(text)
     seconds_since_last_time_other_group_have_sent_msg = how_much_seconds_has_passed_since_last_time_you_call_me()
     minutes = seconds_since_last_time_other_group_have_sent_msg / 60
-    if minutes >= 60 * 3:
+    if minutes >= 10:
         bot.send_group_msg(
             group_id=The_QQ_group_number_you_wanna_forward, message=text)
     elif last_context != None:
@@ -136,5 +128,11 @@ def on_received(protocol, text):
             group_id=The_QQ_group_number_you_wanna_forward, message=text)
 
 
-client.start(wait=False)
-bot.run(host='0.0.0.0', port=8080)
+def main():
+    bot.run(host='0.0.0.0', port=8080)
+
+from threading import Thread
+thread = Thread(target=main)
+thread.start()
+
+client.start(wait=True)
