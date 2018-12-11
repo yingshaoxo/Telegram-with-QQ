@@ -24,6 +24,7 @@ last_context = None
 def in_blacklist(name):
     blacklist = [
         "腾讯新闻",
+        "QQ会员",
     ]
     if name in blacklist:
         return True
